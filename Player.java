@@ -89,12 +89,7 @@ public abstract class Player{
      *         location to another that are not connected)
      */
 
-    public boolean move(int cx, int cy, int nx, int ny){
-        // move from current location to new location
-        // should only be allowed to move if the locations are connected
-        // (with a door that can opened)
-        return false;
-    }
+
 
     /** sets a player's current location
      */
@@ -156,7 +151,6 @@ public abstract class Player{
         }
     }
 
-
     @Override
     public String toString(){
         return character;
@@ -174,30 +168,6 @@ public abstract class Player{
         else{
             return false;
         }
-    }
-
-    // -----TBD--------
-    /** Allows for interaction with this player and another player
-     *
-     * @param p is a player that is interacting with this player
-     */
-    public void interact(Player p){
-        // allows for some interaction with a player
-    }
-
-    /** Allows for interaction with this player and some thing
-     *
-     * @param t is a thing that this player is interacting with
-     */
-    public void interact(Thing t){
-        // allows for some interaction with a player
-    }
-
-    /** Allows for interaction with this player and the room it is in
-     *
-     */
-    public void interact(){
-        // allows for some interaction with anything in the room
     }
 
 }
