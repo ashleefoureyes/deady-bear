@@ -5,7 +5,7 @@ public class Room {
     protected List <Thing> things;
     protected int rows;
     protected int columns;
-    protected boolean [] directions = new boolean[False, False, False, False];
+    boolean[] directions = {False, False, False, False};
 
 
     public Room (List <Player> people, List <Thing> things, int rows, int columns, boolean[] directions) {
@@ -46,6 +46,18 @@ public class Room {
     public void addThings (Thing t) {
         this.things.add (t);
     }
+
+    public void setDirections (Boolean N, Boolean E, Boolean S, Boolean W) {
+        directions [0] = N;
+        directions [1] = E;
+        directions [2] = S;
+        directions [3] = W;
+
+    }
+
+
+
+
 
 
 }
