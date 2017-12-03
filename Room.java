@@ -5,7 +5,7 @@ public class Room {
     protected List <Thing> things;
     protected int rows;
     protected int columns;
-    boolean[] directions = {False, False, False, False};
+    boolean[] directions = {false, false, false, false};
 
 
     public Room (List <Player> people, List <Thing> things, int rows, int columns, boolean[] directions) {
