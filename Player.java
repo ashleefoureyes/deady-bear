@@ -158,6 +158,28 @@ public abstract class Player{
         // allows for some interaction with anything in the room
     }
 
+    //returns true if collision with another occured
+    public boolean collision (Player player){
+        if (this.x == player.getXPosition()
+            && this.y == player.getYPosition()){
+         return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    //returns true if collision with thing occured
+    public boolean collision (Thing thing) {
+        if (this.x == thing.getXPosition()
+                && this.y == thing.getYPosition()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     @Override
     public String toString(){
@@ -165,13 +187,12 @@ public abstract class Player{
     }
 
     /** Two players are the same if they have the same name, location and health. */
-    @Override
-    public boolean equals(Object ob){
-        if(ob instanceof Player){
-            return this.character.equals(((Player)ob).character)
-                    && this.x == ((Player) ob).getXPosition()
-                    && this.y == ((Player)ob).getYPosition()
-                    && this.health == ((Player)ob).health;
+    public boolean equals(Player pl){
+        if(pl instanceof Player){
+            return this.character.equals(((Player)pl).character)
+                    && this.x == ((Player) pl).getXPosition()
+                    && this.y == ((Player)pl).getYPosition()
+                    && this.health == ((Player)pl).health;
 
         }
         else{
