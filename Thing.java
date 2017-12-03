@@ -56,7 +56,9 @@ public abstract class Thing{
     public boolean equals(Object o){
         if( o instanceof Thing){
             return this.name.equals( ((Thing)o).name )
-                    && this.health == ((Thing)o).health;
+                    && this.health == ((Thing)o).health
+                    && this.x == ((Thing)o).x
+                    && this.y == ((Thing)o).y;
 
         }else{
             return false;
