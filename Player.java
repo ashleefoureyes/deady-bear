@@ -2,145 +2,182 @@
  * Created by ashleefoureyes on 2017-11-22.
  */
 
-/**
- * TO DO:
- * • Have not included room references yet, will need to add.
- * • Dealing with Graphics. We could create a graphics class and storage class
- *   what are your thoughts? Used Graphix below temporarily.
- */
+import java.util.List;
 
-import java.awt.Rectangle;
-import java.awt.Graphics;
 
-public abstract class Player {
+public abstract class Player{
+    protected World        world;    // world that player lives in
+    protected String       character;
+    protected int          x;
+    protected int          y;
+    protected int          health = 100;
+    protected List<Thing>  inventory; //things player is carrying
+    protected Thing        friend; //objective of the game: save friend
 
-    // X position of player
-    protected double x;
-
-    // Y position of player
-    protected double y;
-
-    // Player X axis Speed - may combine X and Y depending on approach
-    protected double sx;
-    // Player Y axis Speed
-    protected double sy;
-
-    // Player knows which "world he is in"
-    protected World world;
-
-    // I dont know what graphics we are using, or if we are even making a graphics class/interface
-    //so naming it Graphix for now.
-    protected Graphix graphix;
-
-    // Rectangle used to detect collision of current player
-    protected Rectangle playerBounds = new Rectangle();
-    // Rectangle used to detect collison with other teddy bear zombies or players
-    protected Rectangle collisionBounds = new Rectangle();
-
-    /**
-     * @param pWorld The world where player is contained
-     * @param px X Position
-     * @param py Y Position
+    /** Creates a player in the game
+     *
+     * @param world is the world that the player lives in
+     * @param character is the name of the player
+     * @param x is x position
+     * @param y is y position
+     * @param health is the health of the player (which may or may not be relevant in your game)
+     * @param inventory is a list of Thing objects that the player initially possesses
+     * @param friend is the Thing that the human player is trying to retrieve in the game
      */
-
-    // have to add room to this constructor
-    public Entity(World pWorld, double px, double py) {
-        this.world = pWorld;
-        this.x = px;
-        this.y = py;
+    public Player(World world, String character, int x, int y, int health,
+                  List<Thing>  inventory, Thing friend)
+    {
+        this.world = world;
+        this.character = character;
+        this.x = x;
+        this.y = y;
+        this.health = health;
+        this.inventory = inventory;
+        this.friend = friend;
     }
 
-    /**
-     * @return player current x position 
-     */
-    protected double getX() {
+    /** Getter for a player's world */
+    public World getWorld(){
+        return world;
+    }
+
+    /** Getter for a player's name */
+    public String getCharacter(){
+        return character;
+    }
+
+    /** Getter for a player's x location */
+    public int getXPosition(){
         return x;
     }
 
-    /**
-     * @param x player new x position
-     */
-    protected void setX(double x) {
-        this.x = x;
-    }
-
-    /**
-     * @return player current y position
-     */
-    protected double getY() {
+    /** Getter for a player's y location */
+    public int getYPosition(){
         return y;
     }
 
-    /**
-     * @param y player new y position
+    /** Getter for a player's health */
+    public int getHealth(){
+        return health;
+    }
+
+    /** Getter for a player's inventory  */
+    public List<Thing>  getInventory(){
+        return inventory;
+    }
+
+    /** Getter for a player's goal */
+    public Thing getFriend(){
+        return friend;
+    }
+
+    /** Plays a turn for this player
+     *
+     * For computer players will have the AI for that player.
+     * For human player querie user for input and then react
+     * appropriately for the input.
      */
-    protected void setY(double y) {
+    public void play(){}
+
+
+    /** Moves a player from one location to a new location
+     * @param cx is current x position
+     * @param cy is current y position
+     * @param nx is new x position
+     * @param ny is new y position
+     * @return true if the move was successful and false otherwise (e.g. when trying to move from one
+     *         location to another that are not connected)
+     */
+
+    public boolean move(int cx, int cy, int nx, int ny){
+        // move from current location to new location
+        // should only be allowed to move if the locations are connected
+        // (with a door that can opened)
+        return false;
+    }
+
+    /** sets a player's current location
+     */
+    public void setLocation(int x, int y){
+        this.x = x;
         this.y = y;
     }
 
-    /**
-     * @return player x speed value
+    /** Setter for a player's health
+     * @param h is the new health of the player
      */
-    protected double getXSpeed() {
-        return sx;
+    public void setHealth(int h){
+        this.health = h;
     }
 
-    /**
-     * @param dx new player x speed value
+    /** Adds a thing to the player's list of things
+     *
+     * @param t isa thing to add to the player's list of things
      */
-    protected void setXSpeed(double dx) {
-        this.sx = sx;
+    public void addThing(Thing t){
+        this.inventory.add(t);
     }
 
-    /**
-     * @return player y speed value
+    /** Remove a thing from a player's list of things
+     *
+     * @param t is a thing to be removed from the player's list of things
+     * @return true if remove was successful and false otherwise (i.e., if the player
+     *              does not have this thing in their list).
      */
-    protected double getYSpeed() {
-        return sy;
+    public boolean removeThing(Thing t){
+        return this.inventory.remove(t);
     }
 
-    /**
-     * @param dy new player y speed value
-     */
-    protected void setYSpeed(double dy) {
-        this.sy = sy;
+    //Set the player's goal in the game (setter for goal)
+    public void setGoal(Thing friend){
+        this.friend = friend;
     }
 
-    /**
-     * Moves the player regarding it's current position, speed and time elapsed since the last move
-     * @param elapsed Time since the player was last updated
+
+    /** Allows for interaction with this player and another player
+     *
+     * @param p is a player that is interacting with this player
      */
-    public void changePosition(double elapsed) {
-        // update player location based on current position and speed
-        // time is in milliseconds? so divide by 100 but idk so we can change this?
-        this.x += (elapsed * this.sx) / 1000;
-        this.y += (elapsed * this.sy) / 1000;
+    public void interact(Player p){
+        // allows for some interaction with a player
     }
 
-    /**
-     * @param gr The surface where player will be "drawn"
+    /** Allows for interaction with this player and some thing
+     *
+     * @param t is a thing that this player is interacting with
      */
-    public void create(Graphics gr) {
-        this.graphix.create(gr, (int) this.x, (int) this.y); //Graphix will have a create? can alter entire plan tho
+    public void interact(Thing t){
+        // allows for some interaction with a player
     }
 
-    /**
-     * Checks if for player collision
-     * @param other colliding object or player
-     * @return True if collision occurred
-     */
-    public boolean collision(Player other) {
-        this.playerBounds.setBounds((int) this.x, (int) this.y, this.graphix.getWidth(), this.graphix.getHeight());
-        this.collisionBounds.setBounds((int) other.x, (int) other.y, other.graphix.getWidth(), other.graphix.getHeight());
 
-        return playerBounds.intersects(collisionBounds);
+    /** Allows for interaction with this player and the room it is in
+     *
+     */
+    public void interact(){
+        // allows for some interaction with anything in the room
     }
 
-    /**
-     * collision did happen, however the reaction is dependent on what the player
-     * collided with, so it is abstract
-     * @param other the collision object
-     */
-    public abstract void collided(Player other);
-    public abstract void collisionReaction();
+
+    @Override
+    public String toString(){
+        return character;
+    }
+
+    /** Two players are the same if they have the same name, location and health. */
+    @Override
+    public boolean equals(Object ob){
+        if(ob instanceof Player){
+            return this.character.equals(((Player)ob).character)
+                    && this.x == ((Player) ob).getXPosition()
+                    && this.y == ((Player)ob).getYPosition()
+                    && this.health == ((Player)ob).health;
+
+        }
+        else{
+            return false;
+        }
+    }
+
+
 }
