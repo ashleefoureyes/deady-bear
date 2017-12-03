@@ -1,5 +1,3 @@
-import java.util.List;
-
 /**
  * Created by Rishi on 11/28/2017.
 
@@ -10,27 +8,27 @@ import java.util.List;
  */
 
 public abstract class Thing{
-    protected String       name;
-    protected int          health;
+    protected String    name;
+    protected int       healthvalue;
     protected double    x;
     protected double    y;
 
 
-    public Thing(String name, int health, double x, double y)
+    public Thing(String name, int healthvalue, double x, double y)
     {
         this.name = name;
-        this.health = health;
+        this.healthvalue = healthvalue;
         this.x = x;
         this.y = y;
     }
 
     public String       getName(){ return name; }
-    public int          getHealth(){ return health; }
+    public int          getHealthValue(){ return healthvalue; }
     public double       getX(){   return x;}
     public double       getY(){   return y;}
 
-    public void setHealth(int h){
-        this.health = h;
+    public void setHealthValue(int h){
+        this.healthvalue = h;
     }
 
     public void setX(){ this.x = x;}
@@ -48,15 +46,16 @@ public abstract class Thing{
      *
      * @param p is a player that is interacting with this current thing
      */
-    public void interact(Player p){
+
+    /*public void interact(Player p){
         // allows for some interaction with a player
-    }
+    }*/
 
     @Override
     public boolean equals(Object o){
         if( o instanceof Thing){
             return this.name.equals( ((Thing)o).name )
-                    && this.health == ((Thing)o).health
+                    && this.healthvalue == ((Thing)o).healthvalue
                     && this.x == ((Thing)o).x
                     && this.y == ((Thing)o).y;
 
