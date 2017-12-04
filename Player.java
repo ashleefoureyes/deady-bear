@@ -3,7 +3,8 @@
  */
 
 import java.util.List;
-
+//add location method
+//add booleans whether player is computer
 
 public abstract class Player{
     protected World        world;    // world that player lives in
@@ -129,7 +130,18 @@ public abstract class Player{
     }
 
 
-    //returns true if collision with another occured
+    //checks if player is Rick or computer
+    public boolean isComputer(Player checkPlayer){
+        if (checkPlayer instanceof Rick){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+    //returns true if collision with another occurred
     public boolean collision (Player player){
         if (this.x == player.getXPosition()
             && this.y == player.getYPosition()){
