@@ -1,16 +1,21 @@
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class World
+public class world 
 {
 	public static void main(String args[]) throws IOException
 	{
-		fileTesting();
+		//fileTesting();
+		guiTesting x = new guiTesting();
+		x.test();
 	}
-	
+
 	//Testing and setting up File writing and reading
 	public static void fileTesting() throws IOException
 	{
