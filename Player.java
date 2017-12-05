@@ -4,7 +4,7 @@
 
 import java.util.List;
 //add location method
-//add booleans whether player is computer
+
 
 public abstract class Player{
     protected World        world;    // world that player lives in

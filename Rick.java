@@ -32,18 +32,18 @@ public class Rick extends Player {
         }else if(action.trim().charAt(0) == 'g'){
             switch( action.trim().charAt(action.trim().length()-1) ){
                 case 'e' :
-                    if(verbose){System.err.print("human was in " + this.getLocation());}
+                    if(verbose){System.err.print("Rick was in " + this.getLocation());}
                     this.world.getRoom(this.getXPosition(),getYPosition()).removePlayer(this);
-                    this.setLocation( this.getXPosition(),getYPosition().east() );
+                    this.setLocation( this.getXPosition(),getYPosition());
                     this.world.getRoom(this.getXPosition(),getYPosition()).addPlayer(this);
-                    if(verbose){System.err.print("human now in " + this.getXPosition(),getYPosition());}
+                    if(verbose){System.err.print("Rick now in " + this.getXPosition(),getYPosition());}
                     break;
                 case 'w' :
-                    if(verbose){System.err.print("human was in " + this.getLocation());}
+                    if(verbose){System.err.print("Rick was in " + this.(getXPosition(), getYPosition()));}
                     this.world.getRoom(this.getXPosition(),getYPosition()).removePlayer(this);
-                    this.setLocation( this.getXPosition(),getYPosition().west() );
+                    this.setLocation( this.getXPosition(),getYPosition());
                     this.world.getRoom(this.getXPosition(),getYPosition()).addPlayer(this);
-                    if(verbose){System.err.print("human now in " + this.getXPosition(),getYPosition());}
+                    if(verbose){System.err.print("Rick now in " + this.getXPosition(),getYPosition());}
                     break;
             }
 
