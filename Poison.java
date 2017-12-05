@@ -5,7 +5,7 @@ public class Poison extends Thing{
 
     public Poison(String name, int healthvalue, double x, double y){
         super(name, healthvalue, x, y);
-        this.name = "Hamburger";
+        this.name = "Poison";
         this.healthvalue = -15;
     }
 

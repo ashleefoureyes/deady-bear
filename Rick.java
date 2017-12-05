@@ -10,40 +10,56 @@ import java.util.Scanner;
 
 public class Rick extends Player {
 
-    // set to false when going to submit code
-    private static boolean verbose = true;
+    private static boolean verbose = true; // set false when submitted
 
-    public Rick(World world, String character, int x, int y, int health,
-                List<Thing> inventory, Thing friend){
-        super(world, character, x, y, health, inventory, friend);
+
+    /** Creates a player in the game
+     *
+     * @param w is the world that the player lives in
+     * @param name is the name of the player
+     * @param location is where in the world the player is
+     * @param health is the health of the player.
+     * @param things the inventory
+     * @param goal is the friend to be saved.
+     */
+    public Human(World w, String name, Location location, int health,
+                 List<Thing>  things, Thing goal){
+        super(w, name, location, health, things, goal);
     }
 
+
+    /** Plays a turn for this player
+     *
+     * For computer players will have the AI for that player.
+     * For human player querie user for input and then react
+     * appropriately for the input.
+     */
     @Override
     public void play(){
-        if(verbose){System.err.println("the room as " + world.getRoom(getXPosition(), getYPosition()).getPlayers() + " players");}
-        if(verbose){System.err.println("the room as " + world.getRoom(getXPosition(), getYPosition()).getThings() + " things");}
+        if(verbose){System.err.println("the room as " + w.getRoom(getLocation()).getPlayers() + " players");}
+        if(verbose){System.err.println("the room as " + w.getRoom(getLocation()).getThings() + " things");}
         Scanner in = new Scanner(System.in);
         System.out.print("What would you like to do? [type h <enter> for help] ");
         String action = in.nextLine();
-        if(action.trim().equals("h") ){
+        if( action.trim().equals("h") ){
             help();
         }else if(action.trim().equals("l") ){
             look();
         }else if(action.trim().charAt(0) == 'g'){
             switch( action.trim().charAt(action.trim().length()-1) ){
                 case 'e' :
-                    if(verbose){System.err.print("Rick was in " + this.getLocation());}
-                    this.world.getRoom(this.getXPosition(),getYPosition()).removePlayer(this);
-                    this.setLocation( this.getXPosition(),getYPosition());
-                    this.world.getRoom(this.getXPosition(),getYPosition()).addPlayer(this);
-                    if(verbose){System.err.print("Rick now in " + this.getXPosition(),getYPosition());}
+                    if(verbose){System.err.print("human was in " + this.getLocation());}
+                    this.w.getRoom(this.getLocation()).removePlayer(this);
+                    this.setLocation( this.getLocation().east() );
+                    this.w.getRoom(this.getLocation()).addPlayer(this);
+                    if(verbose){System.err.print("human now in " + this.getLocation());}
                     break;
                 case 'w' :
-                    if(verbose){System.err.print("Rick was in " + this.(getXPosition(), getYPosition()));}
-                    this.world.getRoom(this.getXPosition(),getYPosition()).removePlayer(this);
-                    this.setLocation( this.getXPosition(),getYPosition());
-                    this.world.getRoom(this.getXPosition(),getYPosition()).addPlayer(this);
-                    if(verbose){System.err.print("Rick now in " + this.getXPosition(),getYPosition());}
+                    if(verbose){System.err.print("human was in " + this.getLocation());}
+                    this.w.getRoom(this.getLocation()).removePlayer(this);
+                    this.setLocation( this.getLocation().west() );
+                    this.w.getRoom(this.getLocation()).addPlayer(this);
+                    if(verbose){System.err.print("human now in " + this.getLocation());}
                     break;
             }
 
@@ -53,8 +69,8 @@ public class Rick extends Player {
 
 
     public void look(){
-        String s = "You are currently at ";
-        s += world.getRoom(getXPosition(), getYPosition()).toString();
+        String s = "You are currently in ";
+        s += w.getRoom(getLocation()).toString();
         System.out.println(s);
     }
 
@@ -66,6 +82,7 @@ public class Rick extends Player {
         s += "'w' to list what you have \n ";
         System.out.println(s);
     }
+
 
 }
 
