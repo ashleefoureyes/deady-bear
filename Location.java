@@ -7,18 +7,15 @@
  * Double check ArrayIndexOutOfBoundsException
  */
 public class Location {
-    protected World world;  // the world that the location lives in
     protected int row=0;
     protected int col=0;
 
     /** Creates a new location in the world at the specified row and column */
-    public Location(World w,int row, int col){
-        this.world = w;
+    public Location(int row, int col){
         this.row = row;
         this.col = col;
     }
 
-    public World getWorld(){ return world;}
     public int getRow(){return row;}
     public int getCol(){return col;}
 
@@ -40,7 +37,7 @@ public class Location {
      *       deal.
      */
     public Location west(){
-        return new Location(world, row, col-1);
+        return new Location(row, col-1);
 
 
     }
@@ -51,7 +48,7 @@ public class Location {
      *       deal.
      */
     public Location east(){
-        return new Location(world, row, col+1);
+        return new Location(row, col+1);
     }
 
     /** Returns location to the north (up) of the current location
@@ -60,7 +57,7 @@ public class Location {
      *       Deal.
      */
     public Location north(){
-        return new Location(world, row-1, col);
+        return new Location(row-1, col);
     }
 
     /** Returns location to the south (down) of the current location
@@ -69,7 +66,7 @@ public class Location {
      *       Deal with this.
      */
     public Location south(){
-        return new Location(world, row+1, col);
+        return new Location(row+1, col);
     }
 
     @Override
@@ -84,8 +81,7 @@ public class Location {
     public boolean equals(Object o){
         if( o instanceof Location){
             return this.row == ((Location)o).row &&
-                    this.col == ((Location)o).col &&
-                    this.world == (((Location)o).world);
+                    this.col == ((Location)o).col;
         }else{
             return false;
         }

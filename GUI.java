@@ -1,14 +1,10 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,9 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.List;
+
+//Created by Matthew Kaprielian-Seferian
 
 public class GUI
 {
@@ -59,7 +55,15 @@ public class GUI
 	        @Override
 	        public void actionPerformed(ActionEvent e) 
 	        {
-	        	System.out.println("Left Click");
+	        	if(tracing)System.out.println("Left Click");
+	        	Room[][] rooms = World.getRooms();
+	        	boolean[] doors = rooms[World.getHuman().getXPosition()][World.getHuman().getYPosition()].getDirections();
+	        	
+	        	if(doors[3])
+	        	{
+	        		World.getHuman().setLocation(World.getHuman().getXPosition()-1, World.getHuman().getYPosition());
+	        		frame.add(BorderLayout.WEST, rePaint());
+	        	}
 	        }
 	    });		
 		
@@ -77,7 +81,15 @@ public class GUI
 	        @Override
 	        public void actionPerformed(ActionEvent e) 
 	        {
-	        	System.out.println("Right");
+	        	if(tracing)System.out.println("Right");
+	        	Room[][] rooms = World.getRooms();
+	        	boolean[] doors = rooms[World.getHuman().getXPosition()][World.getHuman().getYPosition()].getDirections();
+	        	
+	        	if(doors[1])
+	        	{
+	        		World.getHuman().setLocation(World.getHuman().getXPosition()+1, World.getHuman().getYPosition());
+	        		frame.add(BorderLayout.WEST, rePaint());
+	        	}
 	        }
 	    });
 	
@@ -96,7 +108,15 @@ public class GUI
 	        @Override
 	        public void actionPerformed(ActionEvent e) 
 	        {
-	        	System.out.println("Up");
+	        	if(tracing)System.out.println("Up");
+	        	Room[][] rooms = World.getRooms();
+	        	boolean[] doors = rooms[World.getHuman().getXPosition()][World.getHuman().getYPosition()].getDirections();
+	        	
+	        	if(doors[0])
+	        	{
+	        		World.getHuman().setLocation(World.getHuman().getXPosition(), World.getHuman().getYPosition()-1);
+	        		frame.add(BorderLayout.WEST, rePaint());
+	        	}
 	        }
 	    });
 	
@@ -115,7 +135,15 @@ public class GUI
 	        @Override
 	        public void actionPerformed(ActionEvent e) 
 	        {
-	        	System.out.println("Down");
+	        	if(tracing)System.out.println("Down");
+	        	Room[][] rooms = World.getRooms();
+	        	boolean[] doors = rooms[World.getHuman().getXPosition()][World.getHuman().getYPosition()].getDirections();
+	        	
+	        	if(doors[2])
+	        	{
+	        		World.getHuman().setLocation(World.getHuman().getXPosition(), World.getHuman().getYPosition()+1);
+	        		frame.add(BorderLayout.WEST, rePaint());
+	        	}
 	        }
 	    });
 		
@@ -271,40 +299,50 @@ public class GUI
 	}
 	public JLayeredPane rePaint()
 	{
+		//Creates the layeredPane that will allow me to layer images
 		JLayeredPane layPane = new JLayeredPane();
 		layPane.setPreferredSize(new Dimension(396, 382));
 		
+		//Base
 		ImageIcon title = new ImageIcon(getClass().getResource("/resources/title.png"));
 		ImageIcon roomBase = new ImageIcon(getClass().getResource("/resources/room1.png"));
 		ImageIcon player = new ImageIcon(getClass().getResource("/resources/player.png"));
+		//Things
 		//ImageIcon key = new ImageIcon(getClass().getResource("/resources/key.png"));
 		ImageIcon food = new ImageIcon(getClass().getResource("/resources/food.png"));
 		ImageIcon poison = new ImageIcon(getClass().getResource("/resources/poison.png"));
+		ImageIcon shield = new ImageIcon(getClass().getResource("/resources/shield.png"));
+		//NPC's
 		ImageIcon lZombie = new ImageIcon(getClass().getResource("/resources/lZombie.png"));
 		ImageIcon friendlyNPC = new ImageIcon(getClass().getResource("/resources/friendlyNPC.png"));
-		ImageIcon shield = new ImageIcon(getClass().getResource("/resources/shield.png"));
 		ImageIcon deadlyNPC = new ImageIcon(getClass().getResource("/resources/deadlyNPC.png"));
 		
+		//Base
 		JLabel titleContainer = new JLabel();
 		JLabel roomContainer = new JLabel();
 		JLabel playerContainer = new JLabel();
+		//Things
 		//JLabel keyContainer = new JLabel();
 		JLabel foodContainer = new JLabel();
 		JLabel poisonContainer = new JLabel();
+		JLabel shieldContainer = new JLabel();
+		//NPC's
 		JLabel lZombieContainer = new JLabel();
 		JLabel friendlyNPCContainer = new JLabel();
-		JLabel shieldContainer = new JLabel();
 		JLabel deadlyNPCContainer = new JLabel();
 		
+		//Base
 		titleContainer.setIcon(title);
 		roomContainer.setIcon(roomBase);
 		playerContainer.setIcon(player);
+		//Things
 		//keyContainer.setIcon(key);
 		foodContainer.setIcon(food);
 		poisonContainer.setIcon(poison);
+		shieldContainer.setIcon(shield);
+		//NPC's
 		lZombieContainer.setIcon(lZombie);
 		friendlyNPCContainer.setIcon(friendlyNPC);
-		shieldContainer.setIcon(shield);
 		deadlyNPCContainer.setIcon(deadlyNPC);
 		
 		Room[][] rooms = World.getRooms();
@@ -314,24 +352,54 @@ public class GUI
 		layPane.add(playerContainer, new Integer(2));
 		
 		//Things
+		List<Thing> t = rooms[World.getHuman().getXPosition()][World.getHuman().getYPosition()].getThings();
+		Object[] tArray = t.toArray();
+		for(int x=0;x<tArray.length;x++)
+		{
+			if(tArray[x] instanceof Food)
+			{
+				layPane.add(foodContainer, new Integer(2));
+			}
+			else if(tArray[x] instanceof Poison)
+			{
+				layPane.add(poisonContainer, new Integer(2));
+			}
+			else if(tArray[x] instanceof Shield)
+			{
+				layPane.add(shieldContainer, new Integer(2));
+			}
+		}
 		//layPane.add(keyContainer, new Integer(2));
-		
-		layPane.add(foodContainer, new Integer(2));
-		layPane.add(poisonContainer, new Integer(2));
-		layPane.add(shieldContainer, new Integer(2));
-		
+
 		//NPC's
-		layPane.add(lZombieContainer, new Integer(2));
-		layPane.add(friendlyNPCContainer, new Integer(2));
-		layPane.add(deadlyNPCContainer, new Integer(2));
+		List<Player> p = rooms[World.getHuman().getXPosition()][World.getHuman().getYPosition()].getPlayers();
+		Object[] pArray = p.toArray();
+		for(int x=0;x<tArray.length;x++)
+		{
+			if(pArray[x] instanceof LeftZombie)
+			{
+				layPane.add(lZombieContainer, new Integer(2));
+			}
+			else if(pArray[x] instanceof FriendlyNPC)
+			{
+				layPane.add(friendlyNPCContainer, new Integer(2));
+			}
+			else if(pArray[x] instanceof DeadlyNPC)
+			{
+				layPane.add(deadlyNPCContainer, new Integer(2));
+			}
+		}		
 		
+		//Base
 		titleContainer.setBounds(0, 0, title.getIconWidth(), title.getIconHeight());
 		roomContainer.setBounds(0, 0, roomBase.getIconWidth(), roomBase.getIconHeight());
 		playerContainer.setBounds(150, 150, player.getIconWidth(), player.getIconHeight());
+		//Things
 		//keyContainer.setBounds(70, 70, key.getIconWidth(), key.getIconHeight());
 		foodContainer.setBounds(110, 70, food.getIconWidth(), food.getIconHeight());
 		poisonContainer.setBounds(165, 70, poison.getIconWidth(), poison.getIconHeight());
 		shieldContainer.setBounds(230, 70, shield.getIconWidth(), shield.getIconHeight());
+		//NPC's
 		lZombieContainer.setBounds(70, 250, lZombie.getIconWidth(), lZombie.getIconHeight());
 		friendlyNPCContainer.setBounds(150, 250, friendlyNPC.getIconWidth(), friendlyNPC.getIconHeight());
 		deadlyNPCContainer.setBounds(230, 250, deadlyNPC.getIconWidth(), deadlyNPC.getIconHeight());

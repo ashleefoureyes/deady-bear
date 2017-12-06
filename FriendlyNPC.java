@@ -3,12 +3,11 @@ import java.util.Scanner;
 
 public class FriendlyNPC extends Player{
 
-    public FriendlyNPC(World world, String character, int x, int y, int health, List<Thing> inventory, Thing friend){
-        super(world, character, x, y, health, inventory, friend);
-        this.character = "Friendly NPC";
+    public FriendlyNPC(int x, int y, int health, List<Thing> inventory){
+        super(x, y, health, inventory);
     }
 
-    public void play(){
+    public Location play(){
         System.out.println("Hello! I am a Friendly NPC here to help you! Answer my question correctly and I'll give you 50HP, else only 25HP.");
         System.out.println("What is 1+1? ");
         Scanner in = new Scanner(System.in);
@@ -23,6 +22,13 @@ public class FriendlyNPC extends Player{
             int newHealth = getHealth()+25;
             setHealth(newHealth);
         }
+		return null;
     }
+
+	@Override
+	public boolean isComputer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

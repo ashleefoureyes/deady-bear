@@ -7,14 +7,10 @@ import java.util.List;
 
 
 public abstract class Player{
-    protected World        world;    // world that player lives in
-    protected String       character;
-    protected Location     location;
-    protected int          health = 100;
     protected int          x;
     protected int          y;
+    protected int          health = 100;
     protected List<Thing>  inventory; //things player is carrying
-    protected Thing        friend; //objective of the game: save friend
 
     /** Creates a player in the game
      *
@@ -26,37 +22,13 @@ public abstract class Player{
      * @param inventory is a list of Thing objects that the player initially possesses
      * @param friend is the Thing that the human player is trying to retrieve in the game
      */
-    public Player(World world, String character, int x, int y, int health,
-                  List<Thing>  inventory, Thing friend)
+    public Player(int x, int y, int health,
+                  List<Thing>  inventory)
     {
-        this.world = world;
-        this.character = character;
         this.x = x;
         this.y = y;
         this.health = health;
         this.inventory = inventory;
-        this.friend = friend;
-    }
-
-    public Player(World world, String character, Location location, int health,
-                  List<Thing> inventory, Thing friend){
-        this.world = world;
-        this.character = character;
-        this.location = location;
-        this.health = health;
-        this.inventory = inventory;
-        this.friend = friend;
-
-    }
-
-    /** Getter for a player's world */
-    public World getWorld(){
-        return world;
-    }
-
-    /** Getter for a player's name */
-    public String getCharacter(){
-        return character;
     }
 
     /** Getter for a player's x location */
@@ -74,16 +46,9 @@ public abstract class Player{
         return health;
     }
 
-    public Location getLocation(){return location;}
-
     /** Getter for a player's inventory  */
     public List<Thing>  getInventory(){
         return inventory;
-    }
-
-    /** Getter for a player's goal */
-    public Thing getFriend(){
-        return friend;
     }
 
     /** Plays a turn for this player
@@ -92,7 +57,7 @@ public abstract class Player{
      * For human player querie user for input and then react
      * appropriately for the input.
      */
-    public void play(){}
+    public abstract Location play();
 
 
     /** Moves a player from one location to a new location
@@ -138,61 +103,6 @@ public abstract class Player{
         return this.inventory.remove(t);
     }
 
-    //Set the player's goal in the game (setter for goal)
-    public void setGoal(Thing friend){
-        this.friend = friend;
-    }
-
-
     //checks if player is Rick or computer
-    public boolean isComputer(Player checkPlayer){
-        if (checkPlayer instanceof Rick){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-    //returns true if collision with another occurred
-    public boolean collision (Player player){
-        if (this.x == player.getXPosition()
-            && this.y == player.getYPosition()){
-         return true;
-        }
-        else{
-            return false;
-        }
-
-    }
-
-    //returns true if collision with thing occured
-    public boolean collision (Thing thing) {
-        if (this.x == thing.getX()
-                && this.y == thing.getY()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public String toString(){
-        return character;
-    }
-
-    /** Two players are the same if they have the same name, location and health. */
-    public boolean equals(Player pl){
-        if(pl instanceof Player){
-            return this.character.equals(((Player)pl).character)
-                    && this.location.equals((pl).location)
-                    && this.health == ((Player)pl).health;
-
-        }
-        else{
-            return false;
-        }
-    }
-
+    public abstract boolean isComputer();
 }

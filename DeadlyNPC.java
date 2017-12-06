@@ -5,9 +5,8 @@
 import java.util.List;
 
 public class DeadlyNPC extends Player {
-    public DeadlyNPC (World world, String character, int x, int y, int health, List<Thing> inventory, Thing friend){
-        super(world, character, x, y, health, inventory, friend);
-        this.character = "Deady Bear";
+    public DeadlyNPC (int x, int y, int health, List<Thing> inventory){
+        super(x, y, health, inventory);
     }
 
     public void action () {
@@ -19,4 +18,17 @@ public class DeadlyNPC extends Player {
 
 
     }
+
+	@Override
+	public Location play() {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isComputer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -1,19 +1,17 @@
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
+
+//Created by Matthew Kaprielian-Seferian
 
 public class World 
 {
 	public static Room[][] rooms;
 	public static Location entrance;
+	public static Player human;
 	public static Thing goal;
 	public Player[] playerList = {new Rick(0, 0, 100, new ArrayList<Thing>()), new LeftZombie(0, 0, 1, new ArrayList<Thing>()), new DeadlyNPC(0, 0, 1, new ArrayList<Thing>()), new FriendlyNPC(0, 0, 1, new ArrayList<Thing>())};
 	public Thing[] thingList = {new Shield("Shield", 0, 0, 0), new Food("Food", 0, 0, 0), new Poison("Poison", 0, 0, 0)};
+	
 	public static void main(String args[]) throws IOException
 	{
 		//initialRead();
@@ -41,7 +39,7 @@ public class World
 		//writer.close();
 		
 		
-		
+		//This finds the total amount of lines in the file.
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		StringBuffer stringBuffer = new StringBuffer();
@@ -54,6 +52,7 @@ public class World
 		}
 		reader.close();
 		
+		//Creates a string array by line of the text file
 		String[] fileInfo = new String[totalLines];
 		int counter=0;
 		String line;
@@ -65,6 +64,7 @@ public class World
 			counter++;
 		}
 		fileReader.close();
+		//Tests the code
 		//if(tracing)System.out.println("Contents of file from stringBuffer:");
 		//if(tracing)System.out.println(stringBuffer.toString());
 		
@@ -79,6 +79,7 @@ public class World
 		}
 		*/
 		
+		//Creates the rectangle structure of the map
 		int roomsSize = Integer.parseInt(fileInfo[0]);
 		int halfRoomSize;
 		if(roomsSize%2==0)
@@ -92,6 +93,7 @@ public class World
 			rooms = new Room[(roomsSize/2)+1][2];
 		}
 		
+		//Declares the 2D array of rooms
 		int roomNumber=0;
 		for(int temp=0;temp<halfRoomSize;temp++)
 		{
@@ -225,23 +227,17 @@ public class World
 			roomNumber+=5;
 		}
 		
+		//Creates the entrance and exit
 		entrance = new Location(0,0);
 		String[] resultsE = fileInfo[fileInfo.length-1].split(",");
 		rooms[Integer.parseInt(resultsE[0])][1].addThings(goal);
 		
+		setHuman(new Rick(0,0,100, new ArrayList<Thing>()));
+		
+		//Proceeds to the GUI creation
 		GUI x = new GUI();
 		x.switcharoo();
 		
-		/*Finds the number of lines in the file (will need later)
-		BufferedReader reader = new BufferedReader(new FileReader("test.txt"));
-		int lines = 0;
-		while (reader.readLine() != null)
-		{
-			lines++;
-		}
-		reader.close();
-		if(tracing)System.out.println("Line numbers in test.txt: "+lines);
-		*/
 		/*
 		//Creates an String arrayList seperating things by spaces (so by word not by line|needs to be by line) 
 		List<String> output = new ArrayList<>();
@@ -277,4 +273,15 @@ public class World
 	{
 		World.rooms = rooms;
 	}
+
+	public static Player getHuman() 
+	{
+		return human;
+	}
+
+	public static void setHuman(Player human) 
+	{
+		World.human = human;
+	}
+	
 }

@@ -2,8 +2,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ZombieNPC extends Player {
-    public ZombieNPC (World world, String character, int x, int y, int health, List<Thing> inventory, Thing friend){
-        super(world, character, x, y, health, inventory, friend);
+    private String character;
+
+	public ZombieNPC (World world, String character, int x, int y, int health, List<Thing> inventory, Thing friend){
+        super(x, y, health, inventory);
         this.character = "Zombie";
     }
 
@@ -15,4 +17,16 @@ public class ZombieNPC extends Player {
 
 
     }
+
+	@Override
+	public Location play() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isComputer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
