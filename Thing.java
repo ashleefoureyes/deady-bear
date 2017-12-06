@@ -47,10 +47,6 @@ public abstract class Thing{
      * @param p is a player that is interacting with this current thing
      */
 
-    /*public void interact(Player p){
-        // allows for some interaction with a player
-    }*/
-
     @Override
     public boolean equals(Object o){
         if( o instanceof Thing){
