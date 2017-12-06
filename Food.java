@@ -6,8 +6,9 @@ public class Food extends Thing{
         this.healthvalue = 25;
     }
 
-    public void interact(){
+    public void interact(Player p){
         System.out.println("You obtained a hamburger! 25HP added to your health!");
+        p.setHealth(this.healthvalue + p.getHealth());
     }
 
 }
