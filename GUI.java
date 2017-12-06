@@ -24,6 +24,8 @@ import java.nio.file.Paths;
 
 public class GUI
 {
+	JFrame mainFrame = new JFrame("Deady Bear");
+	JFrame frame = new JFrame("Deady Bear");
 	public void test()
 	{
 		//Allows for viewing of dev notes to make finding errors easier
@@ -36,7 +38,6 @@ public class GUI
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
 		//Creates the frame that holds the pane as well as the images and 2 extra buttons
-		JFrame frame = new JFrame("Deady Bear");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setSize(800, 500);
 		frame.setLocation(520,200);
@@ -141,35 +142,9 @@ public class GUI
 		t.gridx = 0;
 		t.gridy = 0;
 		
-		JLayeredPane layPane = new JLayeredPane();
-		layPane.setPreferredSize(new Dimension(396, 382));
 		
-		ImageIcon title = new ImageIcon(getClass().getResource("/resources/title.png"));
-		ImageIcon roomBase = new ImageIcon(getClass().getResource("/resources/room1.png"));
-		ImageIcon player = new ImageIcon(getClass().getResource("/resources/player.png"));
-		ImageIcon key = new ImageIcon(getClass().getResource("/resources/key.png"));
 		
-		JLabel titleContainer = new JLabel();
-		JLabel roomContainer = new JLabel();
-		JLabel playerContainer = new JLabel();
-		JLabel keyContainer = new JLabel();
-		
-		titleContainer.setIcon(title);
-		roomContainer.setIcon(roomBase);
-		playerContainer.setIcon(player);
-		keyContainer.setIcon(key);
-		
-		//layPane.add(titleContainer, new Integer(1));
-		layPane.add(roomContainer, new Integer(1));
-		layPane.add(playerContainer, new Integer(2));
-		layPane.add(keyContainer, new Integer(2));
-		
-		titleContainer.setBounds(0, 0, title.getIconWidth(), title.getIconHeight());
-		roomContainer.setBounds(0, 0, roomBase.getIconWidth(), roomBase.getIconHeight());
-		playerContainer.setBounds(150, 150, player.getIconWidth(), player.getIconHeight());
-		keyContainer.setBounds(100, 80, player.getIconWidth(), player.getIconHeight());
-		
-		frame.add(BorderLayout.WEST, layPane);
+		frame.add(BorderLayout.WEST, rePaint());
 		 
 	
 		JPanel bPane = new JPanel(new GridBagLayout());
@@ -236,7 +211,6 @@ public class GUI
 		x.fill = GridBagConstraints.HORIZONTAL;
 		
 		//Creates the frame that holds the pane as well as the images and 2 extra buttons
-		JFrame mainFrame = new JFrame("Deady Bear");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(800, 500);
 		mainFrame.setLocation(520,200);
@@ -287,5 +261,81 @@ public class GUI
 	    //Shows the GUI
 		mainFrame.pack();
 		mainFrame.setVisible(true);
+	}
+	public void switcharoo()
+	{
+		mainFrame.setVisible(false);
+		mainFrame.dispose();
+		
+		test();
+	}
+	public JLayeredPane rePaint()
+	{
+		JLayeredPane layPane = new JLayeredPane();
+		layPane.setPreferredSize(new Dimension(396, 382));
+		
+		ImageIcon title = new ImageIcon(getClass().getResource("/resources/title.png"));
+		ImageIcon roomBase = new ImageIcon(getClass().getResource("/resources/room1.png"));
+		ImageIcon player = new ImageIcon(getClass().getResource("/resources/player.png"));
+		//ImageIcon key = new ImageIcon(getClass().getResource("/resources/key.png"));
+		ImageIcon food = new ImageIcon(getClass().getResource("/resources/food.png"));
+		ImageIcon poison = new ImageIcon(getClass().getResource("/resources/poison.png"));
+		ImageIcon lZombie = new ImageIcon(getClass().getResource("/resources/lZombie.png"));
+		ImageIcon friendlyNPC = new ImageIcon(getClass().getResource("/resources/friendlyNPC.png"));
+		ImageIcon shield = new ImageIcon(getClass().getResource("/resources/shield.png"));
+		ImageIcon deadlyNPC = new ImageIcon(getClass().getResource("/resources/deadlyNPC.png"));
+		
+		JLabel titleContainer = new JLabel();
+		JLabel roomContainer = new JLabel();
+		JLabel playerContainer = new JLabel();
+		//JLabel keyContainer = new JLabel();
+		JLabel foodContainer = new JLabel();
+		JLabel poisonContainer = new JLabel();
+		JLabel lZombieContainer = new JLabel();
+		JLabel friendlyNPCContainer = new JLabel();
+		JLabel shieldContainer = new JLabel();
+		JLabel deadlyNPCContainer = new JLabel();
+		
+		titleContainer.setIcon(title);
+		roomContainer.setIcon(roomBase);
+		playerContainer.setIcon(player);
+		//keyContainer.setIcon(key);
+		foodContainer.setIcon(food);
+		poisonContainer.setIcon(poison);
+		lZombieContainer.setIcon(lZombie);
+		friendlyNPCContainer.setIcon(friendlyNPC);
+		shieldContainer.setIcon(shield);
+		deadlyNPCContainer.setIcon(deadlyNPC);
+		
+		Room[][] rooms = World.getRooms();
+		
+		//Base
+		layPane.add(roomContainer, new Integer(1));
+		layPane.add(playerContainer, new Integer(2));
+		
+		//Things
+		//layPane.add(keyContainer, new Integer(2));
+		
+		layPane.add(foodContainer, new Integer(2));
+		layPane.add(poisonContainer, new Integer(2));
+		layPane.add(shieldContainer, new Integer(2));
+		
+		//NPC's
+		layPane.add(lZombieContainer, new Integer(2));
+		layPane.add(friendlyNPCContainer, new Integer(2));
+		layPane.add(deadlyNPCContainer, new Integer(2));
+		
+		titleContainer.setBounds(0, 0, title.getIconWidth(), title.getIconHeight());
+		roomContainer.setBounds(0, 0, roomBase.getIconWidth(), roomBase.getIconHeight());
+		playerContainer.setBounds(150, 150, player.getIconWidth(), player.getIconHeight());
+		//keyContainer.setBounds(70, 70, key.getIconWidth(), key.getIconHeight());
+		foodContainer.setBounds(110, 70, food.getIconWidth(), food.getIconHeight());
+		poisonContainer.setBounds(165, 70, poison.getIconWidth(), poison.getIconHeight());
+		shieldContainer.setBounds(230, 70, shield.getIconWidth(), shield.getIconHeight());
+		lZombieContainer.setBounds(70, 250, lZombie.getIconWidth(), lZombie.getIconHeight());
+		friendlyNPCContainer.setBounds(150, 250, friendlyNPC.getIconWidth(), friendlyNPC.getIconHeight());
+		deadlyNPCContainer.setBounds(230, 250, deadlyNPC.getIconWidth(), deadlyNPC.getIconHeight());
+		
+		return layPane;
 	}
 }

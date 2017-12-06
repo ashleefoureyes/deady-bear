@@ -10,15 +10,16 @@ import java.util.List;
 public class World 
 {
 	public static Room[][] rooms;
-	public Location entrance;
-	public Thing goal;
-	//public Player[] playerList = {new Rick(0, 0, 100, new ArrayList<Thing>()), new LeftZombie(0, 0, 1, new ArrayList<Thing>()), new DeadlyNPC(0, 0, 1, new ArrayList<Thing>()), new FriendlyNPC(0, 0, 1, new ArrayList<Thing>())};
-	//public Thing[] thingList = {new Shield("Shield", 0, 0, 0), new Food("Food", 0, 0, 0), new Poison("Poison", 0, 0, 0)};
+	public static Location entrance;
+	public static Thing goal;
+	public Player[] playerList = {new Rick(0, 0, 100, new ArrayList<Thing>()), new LeftZombie(0, 0, 1, new ArrayList<Thing>()), new DeadlyNPC(0, 0, 1, new ArrayList<Thing>()), new FriendlyNPC(0, 0, 1, new ArrayList<Thing>())};
+	public Thing[] thingList = {new Shield("Shield", 0, 0, 0), new Food("Food", 0, 0, 0), new Poison("Poison", 0, 0, 0)};
 	public static void main(String args[]) throws IOException
 	{
 		//initialRead();
 		GUI x = new GUI();
 		x.mainScreen();
+		System.out.println("done");
 	}
 
 	//Testing and setting up File writing and reading
@@ -91,50 +92,145 @@ public class World
 			rooms = new Room[(roomsSize/2)+1][2];
 		}
 		
+		int roomNumber=0;
 		for(int temp=0;temp<halfRoomSize;temp++)
 		{
 			ArrayList<Player> p = new ArrayList<Player>();
 			ArrayList<Thing> t = new ArrayList<Thing>();
 			
-			String[] resultsP = fileInfo[4].split(",");
+			String[] resultsP = fileInfo[4+roomNumber].split(",");
 			if(resultsP[0].equals("1"))
 			{
-				System.out.println("It works");
+				p.add(new Rick(temp, 0, 100, new ArrayList<Thing>()));
 			}
 			else if(resultsP[1].equals("1"))
 			{
-				
+				p.add(new LeftZombie(temp, 0, 1, new ArrayList<Thing>()));
 			}
 			else if(resultsP[2].equals("1"))
 			{
-				
+				p.add(new DeadlyNPC(temp, 0, 1, new ArrayList<Thing>()));
 			}
 			else if(resultsP[3].equals("1"))
 			{
-				
+				p.add(new FriendlyNPC(temp, 0, 1, new ArrayList<Thing>()));
 			}
 			
-			String[] resultsT = fileInfo[5].split(",");
+			String[] resultsT = fileInfo[5+roomNumber].split(",");
 			if(resultsT[0].equals("1"))
 			{
-				System.out.println("It works");
+				t.add(new Shield("Shield", 0, temp, 0));
 			}
 			else if(resultsT[1].equals("1"))
 			{
-				
+				t.add(new Food("Food", 0, temp, 0));
 			}
 			else if(resultsT[2].equals("1"))
 			{
-				
+				t.add(new Poison("Poison", 0, 0, 0));
 			}
 			
+			String[] resultsR = fileInfo[3].split(",");
+			boolean[] b = new boolean[4];
+			for(int temp1=0;temp1<b.length;temp1++)
+			{
+				b[temp1]=false;
+			}
 			
-			rooms[temp][0] = new Room(p, t, temp, 0, new boolean[]{false, false, false, false});
+			for(int temp1=0;temp1<resultsR.length;temp1++)
+			{
+				if(Integer.parseInt(resultsR[0])==temp+1)
+				{
+					if(temp!=halfRoomSize)
+					{
+						b[1]=true;
+					}
+				}
+				if((temp+halfRoomSize)==Integer.parseInt(resultsR[temp1]))
+				{
+					b[2]=true;
+				}
+				if(temp-1==Integer.parseInt(resultsR[temp1]))
+				{
+					b[3]=true;
+				}
+			}
+			
+			rooms[temp][0] = new Room(p, t, temp, 0, b);
+			roomNumber+=5;
+		}
+		for(int temp=halfRoomSize;temp<roomsSize;temp++)
+		{
+			ArrayList<Player> p = new ArrayList<Player>();
+			ArrayList<Thing> t = new ArrayList<Thing>();
+			
+			String[] resultsP = fileInfo[4+roomNumber].split(",");
+			if(resultsP[0].equals("1"))
+			{
+				p.add(new Rick(temp, 1, 100, new ArrayList<Thing>()));
+			}
+			else if(resultsP[1].equals("1"))
+			{
+				p.add(new LeftZombie(temp, 1, 1, new ArrayList<Thing>()));
+			}
+			else if(resultsP[2].equals("1"))
+			{
+				p.add(new DeadlyNPC(temp, 1, 1, new ArrayList<Thing>()));
+			}
+			else if(resultsP[3].equals("1"))
+			{
+				p.add(new FriendlyNPC(temp, 1, 1, new ArrayList<Thing>()));
+			}
+			
+			String[] resultsT = fileInfo[5+roomNumber].split(",");
+			if(resultsT[0].equals("1"))
+			{
+				t.add(new Shield("Shield", 1, temp, 0));
+			}
+			else if(resultsT[1].equals("1"))
+			{
+				t.add(new Food("Food", 1, temp, 0));
+			}
+			else if(resultsT[2].equals("1"))
+			{
+				t.add(new Poison("Poison", 1, temp, 0));
+			}
+			
+			String[] resultsR = fileInfo[3].split(",");
+			boolean[] b = new boolean[4];
+			for(int temp1=0;temp1<b.length;temp1++)
+			{
+				b[temp1]=false;
+			}
+			for(int temp1=0;temp1<resultsR.length;temp1++)
+			{
+				if(Integer.parseInt(resultsR[0])==temp+1)
+				{
+					if(temp!=halfRoomSize)
+					{
+						b[1]=true;
+					}
+				}
+				if((temp-halfRoomSize)==Integer.parseInt(resultsR[temp1]))
+				{
+					b[0]=true;
+				}
+				if(temp-1==Integer.parseInt(resultsR[temp1]))
+				{
+					b[3]=true;
+				}
+			}
+			
+			rooms[temp-halfRoomSize][1] = new Room(p, t, temp, 1, b);
+			roomNumber+=5;
 		}
 		
+		entrance = new Location(0,0);
+		String[] resultsE = fileInfo[fileInfo.length-1].split(",");
+		rooms[Integer.parseInt(resultsE[0])][1].addThings(goal);
 		
-		
-		
+		GUI x = new GUI();
+		x.switcharoo();
 		
 		/*Finds the number of lines in the file (will need later)
 		BufferedReader reader = new BufferedReader(new FileReader("test.txt"));
@@ -172,21 +268,13 @@ public class World
 		*/
 	}
 
-	public Player getRoom(int xPosition, int yPosition) 
+	public static Room[][] getRooms() 
 	{
-		return null;
+		return rooms;
 	}
 
-
-	// ADDED but check if this works. It solves alot of errors but idk.
-
-	public Room getRoom(Location location){
-		return rooms[location.getRow()][location.getCol()];
-	}
-
-	public Room getRoom(Player p){
-		int r = p.getLocation().getRow();
-		int c = p.getLocation().getCol();
-		return rooms[r][c];
+	public static void setRooms(Room[][] rooms) 
+	{
+		World.rooms = rooms;
 	}
 }
