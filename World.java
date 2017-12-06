@@ -12,8 +12,8 @@ public class World
 	public static Room[][] rooms;
 	public Location entrance;
 	public Thing goal;
-	public Player[] playerList = {new Rick(0, 0, 100, new ArrayList<Thing>()), new LeftZombie(0, 0, 1, new ArrayList<Thing>()), new DeadlyNPC(0, 0, 1, new ArrayList<Thing>()), new FriendlyNPC(0, 0, 1, new ArrayList<Thing>())};
-	public Thing[] thingList = {new Shield("Shield", 0, 0, 0), new Food("Food", 0, 0, 0), new Poison("Poison", 0, 0, 0)};
+	//public Player[] playerList = {new Rick(0, 0, 100, new ArrayList<Thing>()), new LeftZombie(0, 0, 1, new ArrayList<Thing>()), new DeadlyNPC(0, 0, 1, new ArrayList<Thing>()), new FriendlyNPC(0, 0, 1, new ArrayList<Thing>())};
+	//public Thing[] thingList = {new Shield("Shield", 0, 0, 0), new Food("Food", 0, 0, 0), new Poison("Poison", 0, 0, 0)};
 	public static void main(String args[]) throws IOException
 	{
 		//initialRead();
@@ -175,5 +175,18 @@ public class World
 	public Player getRoom(int xPosition, int yPosition) 
 	{
 		return null;
+	}
+
+
+	// ADDED but check if this works. It solves alot of errors but idk.
+
+	public Room getRoom(Location location){
+		return rooms[location.getRow()][location.getCol()];
+	}
+
+	public Room getRoom(Player p){
+		int r = p.getLocation().getRow();
+		int c = p.getLocation().getCol();
+		return rooms[r][c];
 	}
 }

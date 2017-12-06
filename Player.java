@@ -74,6 +74,8 @@ public abstract class Player{
         return health;
     }
 
+    public Location getLocation(){return location;}
+
     /** Getter for a player's inventory  */
     public List<Thing>  getInventory(){
         return inventory;

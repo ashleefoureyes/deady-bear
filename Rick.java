@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Created by ashleefoureyes on 2017-12-03.
  */
 
-//first Rick edit
+//UNCOMMENT directionals when fixed
 
 
 public class Rick extends Player {
@@ -36,8 +36,8 @@ public class Rick extends Player {
      */
     @Override
     public void play(){
-        if(verbose){System.err.println("the room as " + w.getRoom(getLocation()).getPlayers() + " players");}
-        if(verbose){System.err.println("the room as " + w.getRoom(getLocation()).getThings() + " things");}
+        if(verbose){System.err.println("the room as " + world.getRoom(getLocation()).getPlayers() + " players");}
+        if(verbose){System.err.println("the room as " + world.getRoom(getLocation()).getThings() + " things");}
         Scanner in = new Scanner(System.in);
         System.out.print("What would you like to do? [type h <enter> for help] ");
         String action = in.nextLine();
@@ -49,16 +49,16 @@ public class Rick extends Player {
             switch( action.trim().charAt(action.trim().length()-1) ){
                 case 'e' :
                     if(verbose){System.err.print("human was in " + this.getLocation());}
-                    this.w.getRoom(this.getLocation()).removePlayer(this);
-                    this.setLocation( this.getLocation().east() );
-                    this.w.getRoom(this.getLocation()).addPlayer(this);
+                    this.world.getRoom(this.getLocation()).removePlayer(this);
+                   // this.setLocation(this.getLocation().east());
+                    this.world.getRoom(this.getLocation()).addPlayer(this);
                     if(verbose){System.err.print("human now in " + this.getLocation());}
                     break;
                 case 'w' :
                     if(verbose){System.err.print("human was in " + this.getLocation());}
-                    this.w.getRoom(this.getLocation()).removePlayer(this);
-                    this.setLocation( this.getLocation().west() );
-                    this.w.getRoom(this.getLocation()).addPlayer(this);
+                    this.world.getRoom(this.getLocation()).removePlayer(this);
+                   // this.setLocation(this.getLocation().west());
+                    this.world.getRoom(this.getLocation()).addPlayer(this);
                     if(verbose){System.err.print("human now in " + this.getLocation());}
                     break;
             }
@@ -70,7 +70,7 @@ public class Rick extends Player {
 
     public void look(){
         String s = "You are currently in ";
-        s += w.getRoom(getLocation()).toString();
+        s += world.getRoom(getLocation()).toString();
         System.out.println(s);
     }
 
