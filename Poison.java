@@ -10,5 +10,5 @@ public class Poison extends Thing{
         this.description = "You ate poison! 15 HP have been subtracted from your health!";
     }
 
-    
+
 }
