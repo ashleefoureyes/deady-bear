@@ -7,10 +7,8 @@ public class Poison extends Thing{
         super(name, healthvalue, x, y);
         this.name = "Poison";
         this.healthvalue = -15;
+        this.description = "You ate poison! 15 HP have been subtracted from your health!";
     }
 
-    public void interact(){
-        System.out.println("You ate poison! 15 HP have been subtracted from your health!");
-    }
-
+    
 }
