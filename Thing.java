@@ -6,12 +6,12 @@ public abstract class Thing{
 
     protected int       healthvalue;
 
-    protected double    x;
+    protected int    x;
 
-    protected double    y;
+    protected int    y;
 
 
-    public Thing(String name, String description, int healthvalue, double x, double y)
+    public Thing(String name, String description, int healthvalue, int x, int y)
 
     {
 
@@ -35,9 +35,9 @@ public abstract class Thing{
 
     public int          getHealthValue(){ return healthvalue; }
 
-    public double       getX(){   return x;}
+    public int       getX(){   return x;}
 
-    public double       getY(){   return y;}
+    public int       getY(){   return y;}
 
     public void setX(){ this.x = x;}
     
