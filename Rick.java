@@ -22,7 +22,7 @@ public class Rick extends Player {
      * @param things the inventory
      * @param goal is the friend to be saved.
      */
-    public Human(World w, String name, Location location, int health,
+    public Rick(World w, String name, Location location, int health,
                  List<Thing>  things, Thing goal){
         super(w, name, location, health, things, goal);
     }

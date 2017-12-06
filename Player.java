@@ -9,9 +9,10 @@ import java.util.List;
 public abstract class Player{
     protected World        world;    // world that player lives in
     protected String       character;
+    protected Location     location;
+    protected int          health = 100;
     protected int          x;
     protected int          y;
-    protected int          health = 100;
     protected List<Thing>  inventory; //things player is carrying
     protected Thing        friend; //objective of the game: save friend
 
@@ -35,6 +36,17 @@ public abstract class Player{
         this.health = health;
         this.inventory = inventory;
         this.friend = friend;
+    }
+
+    public Player(World world, String character, Location location, int health,
+                  List<Thing> inventory, Thing friend){
+        this.world = world;
+        this.character = character;
+        this.location = location;
+        this.health = health;
+        this.inventory = inventory;
+        this.friend = friend;
+
     }
 
     /** Getter for a player's world */
@@ -172,8 +184,7 @@ public abstract class Player{
     public boolean equals(Player pl){
         if(pl instanceof Player){
             return this.character.equals(((Player)pl).character)
-                    && this.x == ((Player) pl).getXPosition()
-                    && this.y == ((Player)pl).getYPosition()
+                    && this.location.equals((pl).location)
                     && this.health == ((Player)pl).health;
 
         }
